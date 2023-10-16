@@ -27,18 +27,17 @@ public class Proton : MonoBehaviour, INuclion
             resultedForce = item.transform.position - transform.position;
             resultedForce *= attractionForce;
 
-            if (item.TryGetComponent<Proton>(out Proton pr))
-            {
-                Vector3 repulsionForce = new Vector3(1f / resultedForce.x, 1f / resultedForce.y, 1f / resultedForce.z);
-                //repulsionForce = Vector3.ClampMagnitude(resultedForce, repulsionMaxForce);
-
-                resultedForce -= repulsionForce;
-                pr.RB.AddForce(-resultedForce, ForceMode.Force);
-            }
-
             if (item.TryGetComponent<Neutron>(out Neutron nt))
             {
                 nt.RB.AddForce(-resultedForce);
+            }
+
+            if (item.TryGetComponent<Proton>(out Proton pr))
+            {
+                Vector3 repulsionForce = new Vector3(1f / resultedForce.x, 1f / resultedForce.y, 1f / resultedForce.z);
+
+                resultedForce -= repulsionForce;
+                pr.RB.AddForce(-resultedForce, ForceMode.Force);
             }
 
             RB.AddForce(resultedForce, ForceMode.Force);
