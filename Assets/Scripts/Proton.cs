@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Proton : MonoBehaviour, INuclion
@@ -9,11 +8,12 @@ public class Proton : MonoBehaviour, INuclion
     [SerializeField] private float repulsionMaxForce;
 
 
-    public Rigidbody RB;
+    private Rigidbody _rb;
+    public Rigidbody RB => _rb;
 
     private void Start()
     {
-        RB = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
@@ -24,19 +24,6 @@ public class Proton : MonoBehaviour, INuclion
         {
             if (item.gameObject == this.gameObject) continue;
 
-            //if (item.TryGetComponent<Proton>(out Proton pr))
-            //{
-            //    Vector3 repulsionForce = protonRepulsionForce * (gameObject.transform.position - pr.transform.position);
-            //    Vector3 correctedRepulsionForce = new Vector3(2f / repulsionForce.x, 2f / repulsionForce.y, 2f / repulsionForce.z);
-
-            //    resultedForce += correctedRepulsionForce;
-            //}
-
-            //if (item.TryGetComponent<Neutron>(out Neutron nt))
-            //{
-            //    resultedForce += nuclionsAttractionForce * (item.transform.position - gameObject.transform.position);
-            //}
-
             resultedForce = item.transform.position - transform.position;
             resultedForce *= attractionForce;
 
@@ -46,11 +33,15 @@ public class Proton : MonoBehaviour, INuclion
                 //repulsionForce = Vector3.ClampMagnitude(resultedForce, repulsionMaxForce);
 
                 resultedForce -= repulsionForce;
+                pr.RB.AddForce(-resultedForce, ForceMode.Force);
+            }
+
+            if (item.TryGetComponent<Neutron>(out Neutron nt))
+            {
+                nt.RB.AddForce(-resultedForce);
             }
 
             RB.AddForce(resultedForce, ForceMode.Force);
-
-
         }
     }
 }

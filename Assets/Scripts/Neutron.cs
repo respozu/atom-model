@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Neutron : MonoBehaviour, INuclion
@@ -9,11 +7,12 @@ public class Neutron : MonoBehaviour, INuclion
     [SerializeField] private float repulsionRadius;
     [SerializeField] private float repulsionForce;
 
-    public Rigidbody RB;
+    private Rigidbody _rb;
+    public Rigidbody RB => _rb;
 
     private void Start()
     {
-        RB = GetComponent<Rigidbody>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
