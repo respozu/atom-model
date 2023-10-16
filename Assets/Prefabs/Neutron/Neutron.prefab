@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5442372574935561077}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.66806, y: -0.49855208, z: 0.045633454}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -130,5 +130,4 @@ MonoBehaviour:
   nuclionsAttractionForce: 4
   attractionForce: 1
   repulsionRadius: 2
-  repulsionMaxForce: 10
-  RB: {fileID: 0}
+  repulsionForce: 0

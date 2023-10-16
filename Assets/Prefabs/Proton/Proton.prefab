@@ -131,4 +131,3 @@ MonoBehaviour:
   attractionForce: 1
   repulsionRadius: 2
   repulsionMaxForce: 10
-  RB: {fileID: 0}

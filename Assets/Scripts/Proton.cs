@@ -7,7 +7,6 @@ public class Proton : MonoBehaviour, INuclion
     [SerializeField] private float repulsionRadius;
     [SerializeField] private float repulsionMaxForce;
 
-
     private Rigidbody _rb;
     public Rigidbody RB => _rb;
 
@@ -18,29 +17,31 @@ public class Proton : MonoBehaviour, INuclion
 
     private void FixedUpdate()
     {
-        Vector3 resultedForce = new Vector3();
+        Vector3 resultedForce = Vector3.zero;
         Collider[] nearbyNuclions = Physics.OverlapSphere(gameObject.transform.position, repulsionRadius);
         foreach (var item in nearbyNuclions)
         {
             if (item.gameObject == this.gameObject) continue;
 
-            resultedForce = item.transform.position - transform.position;
-            resultedForce *= attractionForce;
-
-            if (item.TryGetComponent<Proton>(out Proton pr))
-            {
-                Vector3 repulsionForce = new Vector3(1f / resultedForce.x, 1f / resultedForce.y, 1f / resultedForce.z);
-
-                resultedForce -= repulsionForce;
-                pr.RB.AddForce(-resultedForce, ForceMode.Force);
-            }
+            INuclion nuclion = null;
 
             if (item.TryGetComponent<Neutron>(out Neutron nt))
             {
-                nt.RB.AddForce(-resultedForce);
+                nuclion = nt;
+                resultedForce = item.transform.position -= transform.position;
+                resultedForce *= attractionForce;
+
+            }
+            else if (item.TryGetComponent<Proton>(out Proton pr))
+            {
+                nuclion = pr;
+                resultedForce = item.transform.position -= transform.position;
+                resultedForce *= attractionForce;
             }
 
-            RB.AddForce(resultedForce, ForceMode.Force);
+            nuclion?.RB.AddForce(resultedForce, ForceMode.Force);
+             
+            RB.AddForce(-resultedForce, ForceMode.Force);
         }
     }
 }
