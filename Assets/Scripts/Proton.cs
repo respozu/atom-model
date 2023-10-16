@@ -30,7 +30,6 @@ public class Proton : MonoBehaviour, INuclion
             if (item.TryGetComponent<Proton>(out Proton pr))
             {
                 Vector3 repulsionForce = new Vector3(1f / resultedForce.x, 1f / resultedForce.y, 1f / resultedForce.z);
-                //repulsionForce = Vector3.ClampMagnitude(resultedForce, repulsionMaxForce);
 
                 resultedForce -= repulsionForce;
                 pr.RB.AddForce(-resultedForce, ForceMode.Force);
