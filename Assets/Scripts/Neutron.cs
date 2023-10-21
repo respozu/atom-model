@@ -21,20 +21,20 @@ public class Neutron : MonoBehaviour, INuclion
         Collider[] nearbyNuclions = Physics.OverlapSphere(gameObject.transform.position, repulsionRadius);
         foreach (var item in nearbyNuclions)
         {
-            if (item.gameObject == this.gameObject) continue;
+            INuclion nuclion = null;
 
-            if ((item.transform.position - transform.position).magnitude >= 1f)
+            if (item.TryGetComponent<Neutron>(out Neutron nt))
             {
-                resultedForce = -(item.transform.position - transform.position);
-                resultedForce *= repulsionForce;
-
+                nuclion = nt;
             }
-            else
+            if (item.TryGetComponent<Proton>(out Proton pr))
             {
-                resultedForce = item.transform.position - transform.position;
-                resultedForce *= attractionForce;
+                nuclion = pr;
             }
 
+            resultedForce += nuclion.RB.transform.position - transform.position;
+            resultedForce *= attractionForce;
+            nuclion?.RB.AddForce(-resultedForce, ForceMode.Force);
             RB.AddForce(resultedForce, ForceMode.Force);
         }
     }

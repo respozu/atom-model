@@ -108,8 +108,8 @@ Rigidbody:
   m_GameObject: {fileID: 695087786804134561}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 5
-  m_AngularDrag: 10
+  m_Drag: 10
+  m_AngularDrag: 40
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -131,4 +131,4 @@ MonoBehaviour:
   attractionForce: 1
   repulsionRadius: 2
   repulsionMaxForce: 10
-  RB: {fileID: 0}
+  charge: 1
